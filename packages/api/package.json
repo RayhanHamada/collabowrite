@@ -7,8 +7,7 @@
   "license": "ISC",
   "main": "lib/api.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "lib": "lib"
   },
   "files": [
     "lib"
@@ -21,9 +20,21 @@
     "url": "git+https://github.com/RayhanHamada/collabowrite.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "fmt": "prettier --write lib/**/*.{ts,js}",
+    "dev": "nodemon",
+    "build": "tsc"
   },
   "bugs": {
     "url": "https://github.com/RayhanHamada/collabowrite/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.25.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   }
 }
