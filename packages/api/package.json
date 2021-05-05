@@ -21,6 +21,7 @@
   },
   "scripts": {
     "fmt": "prettier --write lib/**/*.{ts,js}",
+    "lint": "eslint --fix",
     "dev": "nodemon",
     "build": "tsc"
   },
