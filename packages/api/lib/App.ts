@@ -1,6 +1,8 @@
 import { App } from '@tinyhttp/app';
 import { logger } from '@tinyhttp/logger';
 
+import route from './route';
+
 export const app = new App()
   .use(
     logger({
@@ -12,6 +14,4 @@ export const app = new App()
       timestamp: true,
     })
   )
-  .get('/', (_req, res) => {
-    res.end(`You're at Home`);
-  });
+  .use('/', route);
