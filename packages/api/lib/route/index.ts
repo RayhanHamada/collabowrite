@@ -1,8 +1,5 @@
 import { App } from '@tinyhttp/app';
-import { auth } from './Auth';
 
-export default new App()
-  .get('/', (_req, res) => {
-    res.end(`You're at Home`);
-  })
-  .use('/auth', auth);
+import Auth from './auth';
+
+export default new App().use('/auth', Auth);
