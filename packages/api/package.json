@@ -1,0 +1,29 @@
+{
+  "name": "@collabowrite/api",
+  "version": "0.0.0",
+  "description": "API for CollaboWrite app",
+  "author": "RayhanHamada <hamadadev2016@gmail.com>",
+  "homepage": "https://github.com/RayhanHamada/collabowrite#readme",
+  "license": "ISC",
+  "main": "lib/api.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RayhanHamada/collabowrite.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/RayhanHamada/collabowrite/issues"
+  }
+}
