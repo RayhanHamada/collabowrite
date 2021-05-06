@@ -29,6 +29,7 @@
     "url": "https://github.com/RayhanHamada/collabowrite/issues"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.10.5",
     "@types/node": "^15.0.2",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
@@ -41,6 +42,8 @@
   "dependencies": {
     "@tinyhttp/app": "^1.3.3",
     "@tinyhttp/cors": "^1.3.0",
-    "@tinyhttp/logger": "^1.3.0"
+    "@tinyhttp/logger": "^1.3.0",
+    "mongoose": "^5.12.7",
+    "ts-mongoose": "^0.0.24"
   }
 }
