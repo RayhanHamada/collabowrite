@@ -1,5 +1,5 @@
 {
-  "exec": "ts-node lib/index.ts",
+  "exec": "./node_modules/.bin/env-cmd -f ./.env-cmdrc -e dev ./node_modules/.bin/ts-node lib/index.ts",
   "ext": "ts,js",
   "ignore": ["*.spec.ts"],
   "watch": ["lib"],
