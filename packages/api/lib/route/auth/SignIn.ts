@@ -1,5 +1,5 @@
-import { App } from '@tinyhttp/app';
+import { Handler } from '@tinyhttp/app';
 
-export const SignIn = new App().post('/', (_req, _res) => {
+export const SignIn: Handler = (_req, _res) => {
   // TODO: implement signin
-});
+};

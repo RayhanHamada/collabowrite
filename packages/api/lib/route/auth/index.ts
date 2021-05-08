@@ -8,6 +8,6 @@ export default new App()
   .get('/', (_req, res) => {
     res.end('/auth');
   })
-  .use('/signup', SignUp)
-  .use('/signin', SignIn)
-  .use('/signout', SignOut);
+  .post('/signup', SignUp)
+  .post('/signin', SignIn)
+  .post('/signout', SignOut);
