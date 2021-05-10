@@ -1,4 +1,6 @@
 import { SignUp } from './SignUp';
+import { SignIn } from './SignIn';
+
 import { RouteFunc } from '../types';
 
 export const Auth: RouteFunc = (fastify, _opts, done) => {
@@ -8,10 +10,7 @@ export const Auth: RouteFunc = (fastify, _opts, done) => {
 
   fastify.post('/signup', SignUp);
 
-  fastify.post('/signin', async function (_req, _res) {
-    //   TODO: implement signin
-    _res.send('hello');
-  });
+  fastify.post('/signin', SignIn);
 
   fastify.post('/signout', async function (_req, _res) {
     //   TODO: implement signout

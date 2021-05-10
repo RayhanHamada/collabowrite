@@ -1,7 +1,7 @@
 import { Static, Type } from '@sinclair/typebox';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
-import { ajv, goodUsernameRegex } from '../Utils';
+import { ajv, goodUsernameRegex, makeResponse } from '../Utils';
 import { User } from '../../model';
 
 const Schema = Type.Object({
@@ -29,10 +29,7 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
    * check if body empty
    */
   if (!req.body) {
-    res.status(400).send({
-      msg: 'no body',
-      validation_errors: [],
-    });
+    res.status(400).send(makeResponse('no body', validateSchema.errors));
 
     return;
   }
@@ -40,10 +37,7 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
   const valid = validateSchema(req.body);
 
   if (!valid) {
-    res.status(400).send({
-      msg: 'body not valid',
-      validation_errors: validateSchema.errors ?? [],
-    });
+    res.status(400).send(makeResponse('body not valid', validateSchema.errors));
 
     return;
   }
@@ -58,10 +52,11 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
    */
   if (password !== passwordConfirmation) {
     // Bad Request
-    res.status(400).send({
-      msg: 'password != passwordConfirmation',
-      validation_errors: validateSchema.errors ?? [],
-    });
+    res
+      .status(400)
+      .send(
+        makeResponse('password != passwordConfirmation', validateSchema.errors)
+      );
 
     return;
   }
@@ -73,10 +68,14 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
 
   if (exists) {
     // Bad Request
-    res.status(409).send({
-      msg: `username ${username} already taken`,
-      validation_errors: validateSchema.errors,
-    });
+    res
+      .status(409)
+      .send(
+        makeResponse(
+          `username ${username} already taken`,
+          validateSchema.errors
+        )
+      );
 
     return;
   }
