@@ -1,0 +1,36 @@
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
+
+export const ajv = addFormats(new Ajv(), [
+  'date-time',
+  'time',
+  'date',
+  'email',
+  'hostname',
+  'ipv4',
+  'ipv6',
+  'uri',
+  'uri-reference',
+  'uuid',
+  'uri-template',
+  'json-pointer',
+  'relative-json-pointer',
+  'regex',
+])
+  .addKeyword('kind')
+  .addKeyword('modifier');
+
+/**
+ * @description https://emailregex.com/
+ */
+export const goodEmailRegex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+/**
+ * @description https://stackoverflow.com/a/12019115/11065299
+ */
+export const goodUsernameRegex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+
+/**
+ * @description https://www.section.io/engineering-education/password-strength-checker-javascript/
+ */
+export const goodPasswordRegex = /^[A-Fa-f0-9]{64}$/;
