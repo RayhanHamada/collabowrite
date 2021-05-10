@@ -1,4 +1,5 @@
-import Ajv from 'ajv';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import Ajv, { ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
 
 export const ajv = addFormats(new Ajv(), [
@@ -34,3 +35,13 @@ export const goodUsernameRegex = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._
  * @description https://www.section.io/engineering-education/password-strength-checker-javascript/
  */
 export const goodPasswordRegex = /^[A-Fa-f0-9]{64}$/;
+
+export const makeResponse = (
+  msg: string,
+  validationErrors?:
+    | ErrorObject<string, Record<string, unknown>, unknown>[]
+    | null
+) => ({
+  msg,
+  validation_errors: validationErrors,
+});
