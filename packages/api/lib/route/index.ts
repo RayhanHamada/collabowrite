@@ -1,5 +1,9 @@
-import { App } from '@tinyhttp/app';
+import { Auth } from './Auth';
+import { RouteFunc } from './types';
 
-import Auth from './auth';
+const route: RouteFunc = (fastify, opts, done) => {
+  fastify.register(Auth, { prefix: '/auth' });
+  done();
+};
 
-export default new App().use('/auth', Auth);
+export default route;

@@ -1,7 +1,7 @@
-import { App } from '@tinyhttp/app';
-import { cors } from '@tinyhttp/cors';
+import { fastify } from 'fastify';
 
 import route from './route';
-import { appLogger } from './Utils';
 
-export const app = new App().use(cors()).use(appLogger).use('/', route);
+export const app = fastify({ logger: true });
+
+app.register(route, { prefix: '/api' });
