@@ -7,6 +7,7 @@ export const User = typedModel(
     username: Type.string({ required: true }),
     email: Type.string({ required: true }),
     password: Type.string({ required: true }),
+    loggedIn: Type.boolean({ required: true }),
   }),
   undefined,
   undefined,

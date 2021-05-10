@@ -84,6 +84,7 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
     email,
     username,
     password,
+    loggedIn: true,
   });
 
   await user.save();
