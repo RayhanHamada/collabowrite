@@ -11,5 +11,10 @@
   "scripts": {
     "fmt": "lerna run fmt",
     "lint": "lerna run lint"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.16.5",
+    "ajv": "^8.3.0",
+    "ajv-formats": "^2.1.0"
   }
 }
