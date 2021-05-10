@@ -1,4 +1,5 @@
-import { RouteGenericInterface } from 'fastify/types/route';
+import { RouteGenericInterface, RouteHandlerMethod } from 'fastify/types/route';
+import { IncomingMessage, Server, ServerResponse } from 'http';
 import { app } from '../App';
 
 /**
@@ -12,3 +13,12 @@ export type RouteFunc = Parameters<typeof app.register>[0];
 export type DefineRouteGeneric<
   D extends RouteGenericInterface
 > = keyof D extends keyof RouteGenericInterface ? D : never;
+
+/**
+ * @description defining endpoint handler function
+ */
+export type CustomHandler<
+  D extends RouteGenericInterface
+> = keyof D extends keyof RouteGenericInterface
+  ? RouteHandlerMethod<Server, IncomingMessage, ServerResponse, D, unknown>
+  : never;
