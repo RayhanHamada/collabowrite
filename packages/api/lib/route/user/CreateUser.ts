@@ -33,6 +33,7 @@ export const CreateUser: CustomHandler<CreateUserRouteGeneric> = async (
 
   if (!valid) {
     res.status(400).send(validateSchema.errors);
+    return;
   }
 
   await new User({
