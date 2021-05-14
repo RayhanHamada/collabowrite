@@ -25,7 +25,7 @@ type CreateUserRouteGeneric = DefineRouteGeneric<{
 
 const validateSchema = ajv.compile(CreateUserBodySchema);
 
-export const CreateUser: CustomHandler<CreateUserRouteGeneric> = async (
+export const CreateUserHandler: CustomHandler<CreateUserRouteGeneric> = async (
   req,
   res
 ) => {
