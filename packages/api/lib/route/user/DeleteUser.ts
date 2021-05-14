@@ -5,15 +5,15 @@ import { ajv } from '../Utils';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
 
-const DeleteUserParamScheme = Type.Object({
-  id: Type.String({ description: 'User id' }),
+const DeleteUserParamSchema = Type.Object({
+  id: Type.RegEx(/^(?!\s*$).+/, { description: 'User id' }),
 });
 
 type DeleteUserRouteGeneric = DefineRouteGeneric<{
-  Params: Static<typeof DeleteUserParamScheme>;
+  Params: Static<typeof DeleteUserParamSchema>;
 }>;
 
-const validateSchema = ajv.compile(DeleteUserParamScheme);
+const validateSchema = ajv.compile(DeleteUserParamSchema);
 
 export const DeleteUserHandler: CustomHandler<DeleteUserRouteGeneric> = async (
   req,
@@ -38,6 +38,6 @@ export const DeleteUserHandler: CustomHandler<DeleteUserRouteGeneric> = async (
         console.log(err);
       }
 
-      res.send(500).send();
+      res.status(500).send();
     });
 };
