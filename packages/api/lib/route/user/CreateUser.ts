@@ -36,6 +36,27 @@ export const CreateUserHandler: CustomHandler<CreateUserRouteGeneric> = async (
     return;
   }
 
+  /**
+   * check for pre-existing username
+   */
+  const exists = await User.exists({ username: req.body.username })
+    .then((v) => v)
+    .catch((err) => {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(err);
+      }
+
+      res.status(500).send();
+    });
+
+  if (exists) {
+    res.status(409).send({
+      msg: `username ${req.body.username} already taken`,
+    });
+
+    return;
+  }
+
   await new User({
     email: req.body.email,
     username: req.body.username,
