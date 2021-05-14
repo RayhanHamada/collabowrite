@@ -4,24 +4,26 @@ import { User } from '../../model';
 import { CustomHandler, DefineRouteGeneric } from '../types';
 import { ajv, goodUsernameRegex } from '../Utils';
 
-const CreateUserSchema = Type.Object(
+const CreateUserBodySchema = Type.Object(
   {
-    email: Type.String({ format: 'email' }),
-    username: Type.String(Type.RegEx(goodUsernameRegex)),
+    email: Type.String({ format: 'email', description: 'User email' }),
+    username: Type.String(
+      Type.RegEx(goodUsernameRegex, { description: 'User name' })
+    ),
     hashedPassword: Type.String({
       description: 'Hashed (SHA256) user password with salt',
     }),
   },
   {
-    description: 'POST /users',
+    description: 'CreateUser Body',
   }
 );
 
 type CreateUserRouteGeneric = DefineRouteGeneric<{
-  Body: Static<typeof CreateUserSchema>;
+  Body: Static<typeof CreateUserBodySchema>;
 }>;
 
-const validateSchema = ajv.compile(CreateUserSchema);
+const validateSchema = ajv.compile(CreateUserBodySchema);
 
 export const CreateUser: CustomHandler<CreateUserRouteGeneric> = async (
   req,
