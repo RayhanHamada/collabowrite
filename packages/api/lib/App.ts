@@ -1,5 +1,5 @@
 import { fastify } from 'fastify';
-import { fastifyJWT } from 'fastify-jwt';
+import fastifyJWT from 'fastify-jwt';
 
 import route from './route';
 
