@@ -7,10 +7,10 @@ import { User } from '../../model';
 const Schema = Type.Object({
   email: Type.String({ format: 'email' }),
   username: Type.String(Type.RegEx(goodUsernameRegex)),
-  password: Type.String({
+  hashedPassword: Type.String({
     description: 'Hashed (SHA256) user password with salt',
   }),
-  passwordConfirmation: Type.String({
+  hashedPasswordConfirmation: Type.String({
     description: 'Hashed (SHA256) user password confirmation with salt',
   }),
 });
@@ -44,13 +44,14 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
 
   const email: string = req.body.email;
   const username: string = req.body.username;
-  const password: string = req.body.password;
-  const passwordConfirmation: string = req.body.passwordConfirmation;
+  const hashedPassword: string = req.body.hashedPassword;
+  const hashedPasswordConfirmation: string =
+    req.body.hashedPasswordConfirmation;
 
   /**
    * check if password == password confirmation
    */
-  if (password !== passwordConfirmation) {
+  if (hashedPassword !== hashedPasswordConfirmation) {
     // Bad Request
     res
       .status(400)
@@ -83,7 +84,7 @@ export const SignUp: CustomHandler<SignUpRouteGeneric> = async function (
   const user = new User({
     email,
     username,
-    password,
+    hashedPassword,
     loggedIn: true,
   });
 

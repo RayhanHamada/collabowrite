@@ -6,7 +6,7 @@ export const User = typedModel(
   createSchema({
     username: Type.string({ required: true }),
     email: Type.string({ required: true }),
-    password: Type.string({ required: true }),
+    hashedPassword: Type.string({ required: true }),
     loggedIn: Type.boolean({ required: true }),
   }),
   undefined,
