@@ -6,7 +6,7 @@ import { ajv } from '../Utils';
 import { CustomHandler, DefineRouteGeneric } from '../types';
 
 const DeleteUserParamSchema = Type.Object({
-  id: Type.RegEx(/^(?!\s*$).+/, { description: 'User id' }),
+  id: Type.String({ description: 'User id', minLength: 24, maxLength: 24 }),
 });
 
 type DeleteUserRouteGeneric = DefineRouteGeneric<{
