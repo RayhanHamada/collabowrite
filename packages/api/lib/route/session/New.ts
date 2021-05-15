@@ -43,14 +43,4 @@ export const NewSessionHandler: CustomHandler<NewSessionRouteGeneric> = async (
   user.loggedIn = true;
 
   await user.save();
-
-  const jwtToken = await res.jwtSign({ username: user.username });
-
-  res.status(200).send({
-    currentProfile: {
-      ...user.toObject(),
-      hashedPassword: undefined,
-    },
-    jwtToken,
-  });
 };
