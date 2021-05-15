@@ -29,6 +29,7 @@
     "url": "https://github.com/RayhanHamada/collabowrite/issues"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/mongoose": "^5.10.5",
     "@types/node": "^15.0.2",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
@@ -46,6 +47,7 @@
     "ajv-formats": "^2.1.0",
     "fastify": "^3.15.1",
     "fastify-cookie": "^5.3.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
     "ts-mongoose": "^0.0.24"
   }

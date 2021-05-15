@@ -1,5 +1,6 @@
 import { Static, Type } from '@sinclair/typebox';
 import { User } from '../../model';
+import jwt from 'jsonwebtoken';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
 
@@ -25,6 +26,9 @@ export const NewSessionHandler: CustomHandler<NewSessionRouteGeneric> = async (
 ) => {
   const user = await User.findOne({ username: req.body.username });
 
+  /**
+   * check if user exists
+   */
   if (!user) {
     res.status(400).send({
       msg: 'invalid username or password',
@@ -32,6 +36,9 @@ export const NewSessionHandler: CustomHandler<NewSessionRouteGeneric> = async (
     return;
   }
 
+  /**
+   * check if hashed password same as in the database
+   */
   if (user?.hashedPassword !== req.body.hashedPassword) {
     res.status(400).send({
       msg: 'invalid username or password',
@@ -40,7 +47,28 @@ export const NewSessionHandler: CustomHandler<NewSessionRouteGeneric> = async (
     return;
   }
 
+  if (user.loggedIn) {
+    res.status(200).send({
+      msg: 'Already logged in',
+    });
+    return;
+  }
+
   user.loggedIn = true;
 
+  const token = jwt.sign(
+    {
+      userId: user._id,
+    },
+    process.env.JWT_SECRET as string,
+    {
+      expiresIn: '1hr',
+    }
+  );
+
   await user.save();
+
+  res.status(200).send({
+    token,
+  });
 };
