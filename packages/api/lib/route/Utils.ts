@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import Ajv, { ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
+import { O } from 'ts-toolbelt';
 
 export const ajv = addFormats(new Ajv(), [
   'date-time',
@@ -45,3 +46,16 @@ export const makeResponse = (
   msg,
   validation_errors: validationErrors,
 });
+
+/**
+ * @description good response
+ */
+export const createGoodResponse = <P extends { payload: unknown }>(
+  payload: P
+) => payload;
+
+/**
+ * @description bad response
+ */
+export const createBadResponse = <E extends { errorMsg: string }>(error?: E) =>
+  error ?? { errorMsg: 'No Message' };
