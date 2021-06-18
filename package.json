@@ -2,19 +2,19 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.4"
   },
   "scripts": {
     "fmt": "lerna run fmt",
     "lint": "lerna run lint"
   },
   "dependencies": {
-    "@sinclair/typebox": "^0.16.5",
-    "ajv": "^8.3.0",
+    "@sinclair/typebox": "^0.16.7",
+    "ajv": "^8.6.0",
     "ajv-formats": "^2.1.0"
   }
 }
