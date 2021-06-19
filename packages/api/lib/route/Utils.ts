@@ -58,7 +58,7 @@ type CreateGoodResponse = <
 export const createGoodResponse: CreateGoodResponse = (response) => response;
 
 type CreateBadResponse = <
-  E extends { errorMsg: string; errorPayload: readonly unknown[] }
+  E extends { errorMsg: string; errorPayload?: readonly unknown[] }
 >(
   response?: E
 ) => NonNullable<E> | { errorMsg: string };
