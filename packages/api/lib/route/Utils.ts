@@ -46,7 +46,9 @@ export const makeResponse = (
   validation_errors: validationErrors,
 });
 
-type CreateGoodResponse = <P extends { payload: Record<string, unknown> }>(
+type CreateGoodResponse = <
+  P extends { msg: string; payload?: Record<string, unknown> }
+>(
   response: P
 ) => P;
 
