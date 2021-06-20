@@ -1,8 +1,13 @@
 import { Static, Type } from '@sinclair/typebox';
-import { User } from '../../model';
+import { UserModel } from '../../model';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
-import { ajv, goodUsernameRegex } from '../Utils';
+import {
+  ajv,
+  createBadResponse,
+  createGoodResponse,
+  goodUsernameRegex,
+} from '../Utils';
 
 const CreateUserBodySchema = Type.Object(
   {
@@ -10,9 +15,6 @@ const CreateUserBodySchema = Type.Object(
     username: Type.String(
       Type.RegEx(goodUsernameRegex, { description: 'User name' })
     ),
-    hashedPassword: Type.String({
-      description: 'Hashed (SHA256) user password with salt',
-    }),
   },
   {
     description: 'CreateUser Body',
@@ -32,46 +34,61 @@ export const CreateUserHandler: CustomHandler<CreateUserRouteGeneric> = async (
   const valid = validateSchema(req.body);
 
   if (!valid) {
-    res.status(400).send(validateSchema.errors);
+    res.status(400).send(
+      createBadResponse({
+        errorMsg: 'invalid schema',
+        errorPayload: validateSchema.errors ?? undefined,
+      })
+    );
     return;
   }
 
   /**
    * check for pre-existing username
    */
-  const exists = await User.exists({ username: req.body.username })
+  const exists = await UserModel.exists({ username: req.body.username })
     .then((v) => v)
     .catch((err) => {
       if (process.env.NODE_ENV === 'development') {
         console.log(err);
       }
 
-      res.status(500).send();
+      res
+        .status(500)
+        .send(createBadResponse({ errorMsg: `failed create user` }));
     });
 
   if (exists) {
-    res.status(409).send({
-      msg: `username ${req.body.username} already taken`,
-    });
+    res.status(409).send(
+      createBadResponse({
+        errorMsg: `username ${req.body.username} already taken`,
+      })
+    );
 
     return;
   }
 
-  await new User({
+  await UserModel.create({
     email: req.body.email,
     username: req.body.username,
-    hashedPassword: req.body.hashedPassword,
-    loggedIn: true,
   })
-    .save()
+
     .then(() => {
-      res.status(200).send();
+      res
+        .status(200)
+        .send(
+          createGoodResponse({ msg: `user '${req.body.username}' created !` })
+        );
     })
     .catch((err) => {
       if (process.env.NODE_ENV === 'development') {
         console.log(err);
       }
 
-      res.status(500).send();
+      res.status(500).send(
+        createBadResponse({
+          errorMsg: `create user ${req.body.username} failed.`,
+        })
+      );
     });
 };

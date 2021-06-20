@@ -1,7 +1,7 @@
 import { Static, Type } from '@sinclair/typebox';
 
-import { User } from '../../model';
-import { ajv } from '../Utils';
+import { User, UserModel } from '../../model';
+import { ajv, createBadResponse, createGoodResponse } from '../Utils';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
 
@@ -10,10 +10,11 @@ const UpdateUserParamScheme = Type.Object({
 });
 
 const UpdateUserBodyScheme = Type.Object({
-  email: Type.String({ description: 'User email' }),
-  username: Type.String({ description: 'User name' }),
-  hashedPassword: Type.String({ description: `User's hashed password` }),
-  loggedIn: Type.Boolean({ description: 'User current login status' }),
+  email: Type.Optional(Type.String({ description: 'User email' })),
+  username: Type.Optional(Type.String({ description: 'User name' })),
+  statusOnline: Type.Optional(
+    Type.Union([Type.Literal('online'), Type.Literal('online')])
+  ),
 });
 
 type UpdateUserRouteGeneric = DefineRouteGeneric<{
@@ -38,11 +39,16 @@ export const UpdateUserHandler: CustomHandler<UpdateUserRouteGeneric> = async (
   });
 
   if (!valid) {
-    res.status(400).send(validateSchema.errors);
+    res.status(400).send(
+      createBadResponse({
+        errorMsg: 'invalid schema',
+        errorPayload: validateSchema.errors ?? undefined,
+      })
+    );
     return;
   }
 
-  await User.findOne({
+  await UserModel.findOne({
     _id: req.params.id,
   })
     .then(async (user) => {
@@ -55,7 +61,7 @@ export const UpdateUserHandler: CustomHandler<UpdateUserRouteGeneric> = async (
         });
 
         await user.save();
-        res.status(200).send();
+        res.status(200).send(createGoodResponse({ msg: 'success' }));
       }
     })
     .catch((err) => {
@@ -63,6 +69,6 @@ export const UpdateUserHandler: CustomHandler<UpdateUserRouteGeneric> = async (
         console.log(err);
       }
 
-      res.status(500).send();
+      res.status(500).send(createBadResponse({ errorMsg: 'failed' }));
     });
 };
