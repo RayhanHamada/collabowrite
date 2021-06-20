@@ -71,6 +71,7 @@ export const CreateUserHandler: CustomHandler<CreateUserRouteGeneric> = async (
   await UserModel.create({
     email: req.body.email,
     username: req.body.username,
+    statusOnline: 'offline',
   })
 
     .then(() => {
