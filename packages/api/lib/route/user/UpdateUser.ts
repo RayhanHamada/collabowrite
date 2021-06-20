@@ -1,10 +1,6 @@
 import { Static, Type } from '@sinclair/typebox';
 
-<<<<<<< HEAD
 import { UserModel } from '../../model';
-=======
-import { User, UserModel } from '../../model';
->>>>>>> 4c3ad010edcfdae432bbadbf866f746a1cae5712
 import { ajv, createBadResponse, createGoodResponse } from '../Utils';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
