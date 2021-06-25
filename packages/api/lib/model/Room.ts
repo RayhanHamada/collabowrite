@@ -2,9 +2,9 @@ import { prop } from '@typegoose/typegoose';
 import { Player } from './Player';
 
 export class Room {
-  @prop({ required: true })
-  public documentID!: string;
+  @prop()
+  public docID!: string;
 
-  @prop({ required: true, type: [Player] })
+  @prop({ type: () => [Player] })
   public playerList!: Player[];
 }

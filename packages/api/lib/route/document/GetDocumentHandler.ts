@@ -1,25 +1,25 @@
 import { Static, Type } from '@sinclair/typebox';
-import { UserModel } from '../../model';
+import { DocumentModel } from '../../model';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
 import { ajv, createBadResponse, createGoodResponse } from '../Utils';
 
-export const GetUserParamSchema = Type.Object(
+const GetDocumentParamSchema = Type.Object(
   {
-    id: Type.String({ description: 'User id' }),
+    id: Type.String({ description: 'User id', minLength: 24, maxLength: 24 }),
   },
   {
-    description: 'GetUser params',
+    description: 'GetDocument params',
   }
 );
 
-export type GetUserRouteGeneric = DefineRouteGeneric<{
-  Params: Static<typeof GetUserParamSchema>;
+type GetDocumentRouteGeneric = DefineRouteGeneric<{
+  Params: Static<typeof GetDocumentParamSchema>;
 }>;
 
-const validateSchema = ajv.compile(GetUserParamSchema);
+const validateSchema = ajv.compile(GetDocumentParamSchema);
 
-export const GetUserHandler: CustomHandler<GetUserRouteGeneric> = async (
+export const GetDocumentHandler: CustomHandler<GetDocumentRouteGeneric> = async (
   req,
   res
 ) => {
@@ -38,12 +38,13 @@ export const GetUserHandler: CustomHandler<GetUserRouteGeneric> = async (
   /**
    * get user with id
    */
-  await UserModel.findOne({ _id: req.params.id })
-    .then((user) => {
-      if (!user) {
+  await DocumentModel.findOne({ _id: req.params.id })
+    .then((doc) => {
+      if (!doc) {
         res.status(404).send(
           createGoodResponse({
             msg: `user ${req.params.id} not found`,
+            payload: {},
           })
         );
       }
@@ -52,7 +53,7 @@ export const GetUserHandler: CustomHandler<GetUserRouteGeneric> = async (
         createGoodResponse({
           msg: 'user found !',
           payload: {
-            user: user?.toJSON(),
+            user: doc?.toJSON(),
           },
         })
       );

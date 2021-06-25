@@ -1,16 +1,23 @@
 import { Static, Type } from '@sinclair/typebox';
-import { UserModel } from '../../model';
+import { DocumentModel } from '../../model';
 import { CustomHandler, DefineRouteGeneric } from '../types';
 import { ajv, createBadResponse, createGoodResponse } from '../Utils';
 
-export const GetUsersQuerySchema = Type.Object(
+export const GetDocumentsQuerySchema = Type.Object(
   {
     skip: Type.Optional(
-      Type.Number({ description: 'take from number', minimum: 0, default: 0 })
+      Type.Integer({
+        description: 'skip from index number',
+        minimum: 0,
+        default: 0,
+      })
     ),
     limit: Type.Optional(
       Type.Integer({
         description: 'list limit',
+        minimum: 1,
+        maximum: 100,
+        default: 100,
       })
     ),
   },
@@ -19,13 +26,13 @@ export const GetUsersQuerySchema = Type.Object(
   }
 );
 
-export type GetUsersRouteGeneric = DefineRouteGeneric<{
-  Querystring: Static<typeof GetUsersQuerySchema>;
+type GetDocumentsRouteGeneric = DefineRouteGeneric<{
+  Querystring: Static<typeof GetDocumentsQuerySchema>;
 }>;
 
-const validateSchema = ajv.compile(GetUsersQuerySchema);
+const validateSchema = ajv.compile(GetDocumentsQuerySchema);
 
-export const GetUsersHandler: CustomHandler<GetUsersRouteGeneric> = async (
+export const GetDocumentsHandler: CustomHandler<GetDocumentsRouteGeneric> = async (
   req,
   res
 ) => {
@@ -42,7 +49,7 @@ export const GetUsersHandler: CustomHandler<GetUsersRouteGeneric> = async (
     return;
   }
 
-  await UserModel.find({}, undefined, {
+  await DocumentModel.find({}, undefined, {
     skip: req.query.skip,
     limit: req.query.limit,
   })

@@ -1,15 +1,15 @@
 import { Static, Type } from '@sinclair/typebox';
 
-import { UserModel } from '../../model';
+import { DocumentModel } from '../../model';
 import { ajv, createBadResponse, createGoodResponse } from '../Utils';
 
 import { CustomHandler, DefineRouteGeneric } from '../types';
 
-export const UpdateUserParamSchema = Type.Object({
+export const UpdateDocumentParamSchema = Type.Object({
   id: Type.String({ description: 'User id', minLength: 24, maxLength: 24 }),
 });
 
-export const UpdateUserBodySchema = Type.Object({
+export const UpdateDocumentBodySchema = Type.Object({
   email: Type.Optional(Type.String({ description: 'User email' })),
   username: Type.Optional(Type.String({ description: 'User name' })),
   statusOnline: Type.Optional(
@@ -17,19 +17,19 @@ export const UpdateUserBodySchema = Type.Object({
   ),
 });
 
-export type UpdateUserRouteGeneric = DefineRouteGeneric<{
-  Params: Static<typeof UpdateUserParamSchema>;
-  Body: Static<typeof UpdateUserBodySchema>;
+export type UpdateDocumentRouteGeneric = DefineRouteGeneric<{
+  Params: Static<typeof UpdateDocumentParamSchema>;
+  Body: Static<typeof UpdateDocumentBodySchema>;
 }>;
 
 const validateSchema = ajv.compile(
   Type.Object({
-    Params: UpdateUserParamSchema,
-    Body: UpdateUserBodySchema,
+    Params: UpdateDocumentParamSchema,
+    Body: UpdateDocumentBodySchema,
   })
 );
 
-export const UpdateUserHandler: CustomHandler<UpdateUserRouteGeneric> = async (
+export const UpdateDocumentHandler: CustomHandler<UpdateDocumentRouteGeneric> = async (
   req,
   res
 ) => {
@@ -48,19 +48,19 @@ export const UpdateUserHandler: CustomHandler<UpdateUserRouteGeneric> = async (
     return;
   }
 
-  await UserModel.findOne({
+  await DocumentModel.findOne({
     _id: req.params.id,
   })
-    .then(async (user) => {
-      if (user) {
+    .then(async (doc) => {
+      if (doc) {
         /**
          * update and save user
          */
-        await user.update({
+        await doc.update({
           ...req.body,
         });
 
-        await user.save();
+        await doc.save();
         res.status(200).send(createGoodResponse({ msg: 'success' }));
       }
     })

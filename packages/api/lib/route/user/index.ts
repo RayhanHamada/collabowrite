@@ -1,22 +1,66 @@
 import { RouteFunc } from '../types';
 
-import { CreateUserHandler } from './CreateUser';
-import { DeleteUserHandler } from './DeleteUser';
-import { GetUserHandler } from './GetUser';
+import { CreateUserBodySchema, CreateUserHandler } from './CreateUser';
+import { DeleteUserHandler, DeleteUserParamSchema } from './DeleteUser';
+import { GetUserHandler, GetUserParamSchema } from './GetUser';
 import { GetUsersHandler, GetUsersQuerySchema } from './GetUsers';
-import { UpdateUserHandler } from './UpdateUser';
+import {
+  UpdateUserBodySchema,
+  UpdateUserHandler,
+  UpdateUserParamSchema,
+} from './UpdateUser';
 
 export const UserRoute: RouteFunc = (fastify, _opts, done) => {
   fastify.get(
     '/',
-    { schema: { querystring: GetUsersQuerySchema } },
+    {
+      schema: {
+        querystring: GetUsersQuerySchema,
+      },
+    },
     GetUsersHandler
   );
 
-  fastify.get('/:id', GetUserHandler);
-  fastify.post('/', CreateUserHandler);
-  fastify.delete('/:id', DeleteUserHandler);
-  fastify.put('/:id', UpdateUserHandler);
+  fastify.get(
+    '/:id',
+    {
+      schema: {
+        params: GetUserParamSchema,
+      },
+    },
+    GetUserHandler
+  );
+
+  fastify.post(
+    '/',
+    {
+      schema: {
+        body: CreateUserBodySchema,
+      },
+    },
+    CreateUserHandler
+  );
+
+  fastify.delete(
+    '/:id',
+    {
+      schema: {
+        params: DeleteUserParamSchema,
+      },
+    },
+    DeleteUserHandler
+  );
+
+  fastify.put(
+    '/:id',
+    {
+      schema: {
+        params: UpdateUserParamSchema,
+        body: UpdateUserBodySchema,
+      },
+    },
+    UpdateUserHandler
+  );
 
   done();
 };

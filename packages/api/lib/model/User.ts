@@ -1,4 +1,5 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
+import { DocumentAccessData } from './DocumentAccessData';
 
 export class User {
   /**
@@ -14,10 +15,16 @@ export class User {
   public email!: string;
 
   /**
-   * @description user's online status
+   * @description status online user
    */
-  @prop({ required: true, enum: ['online', 'offline'] })
-  public statusOnline!: 'online' | 'offline';
+  @prop({ enum: ['online', 'offline'] })
+  public onlineStatus!: 'online' | 'offline';
+
+  /**
+   * @description data akses dokumen
+   */
+  @prop({ type: () => [DocumentAccessData] })
+  public documentAccessDatas!: DocumentAccessData[];
 }
 
 export const UserModel = getModelForClass(User);

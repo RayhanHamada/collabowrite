@@ -9,7 +9,7 @@ import {
   goodUsernameRegex,
 } from '../Utils';
 
-const CreateUserBodySchema = Type.Object(
+export const CreateUserBodySchema = Type.Object(
   {
     email: Type.String({ format: 'email', description: 'User email' }),
     username: Type.String(
@@ -21,7 +21,7 @@ const CreateUserBodySchema = Type.Object(
   }
 );
 
-type CreateUserRouteGeneric = DefineRouteGeneric<{
+export type CreateUserRouteGeneric = DefineRouteGeneric<{
   Body: Static<typeof CreateUserBodySchema>;
 }>;
 
@@ -71,15 +71,18 @@ export const CreateUserHandler: CustomHandler<CreateUserRouteGeneric> = async (
   await UserModel.create({
     email: req.body.email,
     username: req.body.username,
-    statusOnline: 'offline',
+    onlineStatus: 'offline',
+    documentAccessDatas: [],
   })
-
-    .then(() => {
-      res
-        .status(200)
-        .send(
-          createGoodResponse({ msg: `user '${req.body.username}' created !` })
-        );
+    .then((doc) => {
+      res.status(200).send(
+        createGoodResponse({
+          msg: `user '${req.body.username}' created !`,
+          payload: {
+            user: doc.toJSON(),
+          },
+        })
+      );
     })
     .catch((err) => {
       if (process.env.NODE_ENV === 'development') {

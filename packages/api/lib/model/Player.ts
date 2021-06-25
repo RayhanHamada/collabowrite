@@ -1,16 +1,27 @@
 import { prop } from '@typegoose/typegoose';
-import { User } from './User';
 
 export class Player {
   /**
-   * @description user
+   * @description nama user
    */
-  @prop({ required: true, type: User })
-  public user!: User;
+  @prop()
+  public username!: string;
+
+  /**
+   * @description warna cursor
+   */
+  @prop()
+  public cursorColor!: string;
+
+  /**
+   * @description peerJS ID
+   */
+  @prop()
+  public peerJSID!: string;
 
   /**
    * @description room master status
    */
-  @prop({ required: true })
-  public rmStatus!: boolean;
+  @prop()
+  public isRM!: boolean;
 }
