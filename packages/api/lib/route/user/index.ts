@@ -2,6 +2,19 @@ import { RouteFunc } from '../types';
 
 import { CreateUserBodySchema, CreateUserHandler } from './CreateUser';
 import { DeleteUserHandler, DeleteUserParamSchema } from './DeleteUser';
+import {
+  CreateDocumentAccessDataBodySchema,
+  CreateDocumentAccessDataHandler,
+} from './document-access-data/CreateDocumentAccessData';
+import {
+  GetDocumentAccessDatasHandler,
+  GetDocumentAccessDatasParamsSchema,
+} from './document-access-data/GetDocumentAccessDatas';
+import {
+  UpdateDocumentAccessDataBodySchema,
+  UpdateDocumentAccessDataHandler,
+  UpdateDocumentAccessDataParamSchema,
+} from './document-access-data/UpdateDocumentAccessData';
 import { GetUserHandler, GetUserParamSchema } from './GetUser';
 import { GetUsersHandler, GetUsersQuerySchema } from './GetUsers';
 import {
@@ -60,6 +73,50 @@ export const UserRoute: RouteFunc = (fastify, _opts, done) => {
       },
     },
     UpdateUserHandler
+  );
+
+  /**
+   * document access data
+   */
+  fastify.post(
+    '/:userID/document-access-data',
+    {
+      schema: {
+        body: CreateDocumentAccessDataBodySchema,
+      },
+    },
+    CreateDocumentAccessDataHandler
+  );
+
+  fastify.put(
+    '/:userID/document-access-data/:documentAccessDataID',
+    {
+      schema: {
+        params: UpdateDocumentAccessDataParamSchema,
+        body: UpdateDocumentAccessDataBodySchema,
+      },
+    },
+    UpdateDocumentAccessDataHandler
+  );
+
+  fastify.get(
+    '/:userID/document-access-data',
+    {
+      schema: {
+        params: GetDocumentAccessDatasParamsSchema,
+      },
+    },
+    GetDocumentAccessDatasHandler
+  );
+
+  fastify.get(
+    '/:userID/document-access-data/:docID',
+    {
+      schema: {
+        params: GetDocumentAccessDataParamsSchema,
+      },
+    },
+    GetDocumentAccessDataHandler
   );
 
   done();
