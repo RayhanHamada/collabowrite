@@ -1,44 +1,44 @@
 @startuml collabowrite_erd
 entity "user_data" as user_data {
-    *id: number <<generated>>
+    *id             : int <<generated>>
     --
-    id_supabase: uuid <<FK, U>>
-    username: varchar
-    email: varchar
-    online_status
+    id_supabase     : uuid <<FK, U>>
+    username        : varchar
+    email           : varchar
+    online_status   : varchar
 }
 
 entity "document_access_data" as document_access_data {
-    *id: int <<generated>>
+    *id             : int <<generated>>
     --
-    id_document: uuid <<FK>>
-    id_user_data: int <<FK>>
-    access_right: varchar
+    id_document     : uuid <<FK>>
+    id_user_data    : int <<FK>>
+    access_right    : varchar
     ownership_status: varchar
 }
 
 entity "document" as document {
-    *id: uuid
+    *id             : uuid
     --
-    document_name: varchar
-    content: jsonb
+    document_name   : varchar
+    content         : jsonb
 }
 
 entity "room" as room {
-    *id: uuid
+    *id     : uuid
     --
-    id_doc: uuid <<FK>>
+    id_doc  : uuid <<FK>>
 }
 
 entity "player" as player {
-    *id: uuid
+    *id             : uuid
     --
-    id_user_data: int <FK, U>>
-    id_room: uuid <<FK>>
-    username: varchar
-    cursor_color: int
-    id_peerjs: varchar
-    is_room_master: bool
+    id_user_data    : int <FK, U>>
+    id_room         : uuid <<FK>>
+    username        : varchar
+    cursor_color    : int
+    id_peerjs       : varchar
+    is_room_master  : bool
 }
 
 
