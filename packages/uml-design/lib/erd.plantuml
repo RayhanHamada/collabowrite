@@ -25,9 +25,9 @@ entity "document" as document {
 }
 
 entity "room" as room {
-    *id     : uuid
+    *id         : uuid
     --
-    id_doc  : uuid <<FK>>
+    id_document : uuid <<FK>>
 }
 
 entity "player" as player {
