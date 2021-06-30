@@ -7,11 +7,14 @@ import { SignUpButton } from './SignUpButton';
 export const Navbar: React.FC = (_props) => {
   return (
     <Flex
+      w="full"
       bgColor="black"
       height="16"
       borderBottom="1px"
       borderColor="white"
       paddingX="8"
+      position="fixed"
+      zIndex="10"
     >
       <Center>
         <Box>
