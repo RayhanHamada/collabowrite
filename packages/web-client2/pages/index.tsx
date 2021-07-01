@@ -1,3 +1,4 @@
+import { Navbar } from '@/components/Navbar';
 import { Button, Center, Container, Flex, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 import {
@@ -5,7 +6,6 @@ import {
   AiOutlineLink,
   AiOutlineUsergroupAdd,
 } from 'react-icons/ai';
-import { Navbar } from '../components/Navbar';
 
 const whyReasons = [
   {
