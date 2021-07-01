@@ -1,9 +1,27 @@
-import { Container, Text } from '@chakra-ui/react';
+import { CollaboWriteLogo } from '@/components/CollaboWriteLogo';
+import { SignInForm } from '@/components/SignInForm';
+import { Container, Flex } from '@chakra-ui/react';
 
 export default function SignIn() {
   return (
-    <Container maxW="full" h="100vh" marginX="auto" bgColor="black">
-      <Text textColor="white">Sign In</Text>
+    <Container
+      maxW="full"
+      h="100vh"
+      marginX="auto"
+      bgColor="black"
+      textAlign="center"
+      paddingTop="16"
+    >
+      <CollaboWriteLogo fontSize="2xl" />
+      <Flex
+        flexDir="column"
+        // justifyContent="center"
+        alignItems="center"
+        h="full"
+        paddingTop="4"
+      >
+        <SignInForm />
+      </Flex>
     </Container>
   );
 }
