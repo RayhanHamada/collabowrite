@@ -15,6 +15,7 @@ entity "document_access_data" as document_access_data {
     id_user_data    : int <<FK>>
     access_right    : varchar
     ownership_status: varchar
+    created_at      : Date
 }
 
 entity "document" as document {
@@ -22,12 +23,15 @@ entity "document" as document {
     --
     document_name   : varchar
     content         : jsonb
+    created_at      : Date
+    last_modified   : Date
 }
 
 entity "room" as room {
     *id         : uuid
     --
     id_document : uuid <<FK>>
+    created_at  : Date
 }
 
 entity "player" as player {
@@ -39,6 +43,7 @@ entity "player" as player {
     cursor_color    : int
     id_peerjs       : varchar
     is_room_master  : bool
+    joined_at       : Date
 }
 
 
