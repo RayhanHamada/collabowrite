@@ -58,14 +58,14 @@ export default function LandingPage() {
         {/* Why Section */}
         <Text
           textAlign="center"
-          paddingTop={{ base: '24', lg: '96' }}
+          paddingTop="16"
           fontSize="3xl"
           textDecor="underline"
           color="white"
         >
           Why Us ?
         </Text>
-        <Flex paddingY="16" alignItems="center" justifyContent="center">
+        <Flex paddingY="4" alignItems="center" justifyContent="center">
           {whyReasons.map(({ reason, Icon }, idx) => (
             <Flex
               key={idx}
