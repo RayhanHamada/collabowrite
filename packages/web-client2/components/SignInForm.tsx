@@ -44,15 +44,20 @@ export const SignInForm: React.FC = () => {
     resolver: yupResolver(formFieldSchema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(`${data.email} ${data.password}`);
-  });
+  const onSubmit = handleSubmit(
+    async (data) => {
+      console.log(`isvalid ${isValid}`);
+      console.log(`${data.email} ${data.password}`);
+    },
+    (errors) => {
+      console.log(`isvalid ${isValid}`);
+      console.log(errors);
+    }
+  );
 
   const handleSignIn: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(errors.password);
-    console.log(errors.email);
-    console.log(isValid);
+
     if (!errors) {
       onSubmit();
     }
@@ -78,7 +83,7 @@ export const SignInForm: React.FC = () => {
       <Text textColor="white" fontSize="3xl">
         Sign In
       </Text>
-      <form onSubmit={handleSignIn}>
+      <form onSubmit={onSubmit}>
         <FormControl id="email" isInvalid={Boolean(errors.email)}>
           <FormLabel textColor="white">Email</FormLabel>
           <InputGroup>
@@ -95,8 +100,8 @@ export const SignInForm: React.FC = () => {
               {...register('email')}
             />
           </InputGroup>
-          <FormErrorMessage textColor="white">
-            <Text textColor="white">{errors.email?.message}</Text>
+          <FormErrorMessage textColor="red">
+            {errors.email?.message}
           </FormErrorMessage>
         </FormControl>
         <Box h="8"></Box>
@@ -139,8 +144,8 @@ export const SignInForm: React.FC = () => {
               />
             </InputRightElement>
           </InputGroup>
-          <FormErrorMessage textColor="white">
-            <Text textColor="white">{errors.password?.message}</Text>
+          <FormErrorMessage textColor="red">
+            {errors.password?.message}
           </FormErrorMessage>
         </FormControl>
         <Box h="8"></Box>
@@ -149,6 +154,7 @@ export const SignInForm: React.FC = () => {
           isLoading={isSubmitting}
           type="submit"
           _hover={{ opacity: 0.7 }}
+          disabled={!isValid}
         >
           Sign In
         </Button>
