@@ -91,3 +91,16 @@ export default function LandingPage() {
     </div>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   if (supabase.auth.session()) {
+//     return {
+//       notFound: false,
+//       redirect: { statusCode: 301, destination: '/dashboard' },
+//     };
+//   }
+
+//   return {
+//     props: {},
+//   };
+// };
